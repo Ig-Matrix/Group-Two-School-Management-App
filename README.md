@@ -9,11 +9,11 @@ The School Management Application is a Java-based web application designed to ma
 This project is developed and maintained by the following contributors:
 
 1. [Omoma Ighawosa](https://github.com/Ig-Matrix)
-2. [Contributor 2](link-to-github-profile)
-3. [Contributor 3](link-to-github-profile)
-4. [Contributor 4](link-to-github-profile)
-5. [Contributor 5](link-to-github-profile)
-6. [Contributor 6](link-to-github-profile)
+2. [Chisom Promise](https://github.com/Chimise)
+3. [Tolu John](https://github.com/Tolu-John)
+4. [Ehimze Nathanael](https://github.com/ehimze007)
+5. [Salis Abdumalik](https://github.com/Malikadedeji)
+6. [Suleiman Musthapha](https://github.com/mastermusty)
 
 ## Features
 
