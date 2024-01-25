@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"   xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Edit School</h1>
+
+<form th:action="@{/school/update/{id}(id=${school.id})}" method="post" th:object="${school}">
+    <label>Name</label><br>
+    <input type="text" name="name" th:value="${school.name}">
+    <br><br>
+
+    <label>Address</label><br>
+    <input type="text" name="address" th:value="${school.address}">
+    <br><br>
+
+    <label>Number of Staff</label><br>
+    <input type="text" name="no_of_staff" th:value="${school.no_of_staff}">
+    <br><br>
+
+
+    <input type="submit" value="Save">
+    <br><br>
+
+</form>
+
+</body>
+</html>

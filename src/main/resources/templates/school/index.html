@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>School Mgt System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<h1 th:text="${info}"></h1>
+
+<form th:action="@{/school/searchbyname}" method="get">
+
+    <input type="text" name="term" placeholder="Search..">
+    <button type="submit" class="btn btn-danger m-1" value="save">Search</button>
+
+</form>
+
+<a th:href="@{/school/create}" class="btn btn-primary">Create School</a>
+<a th:href="@{/school/list}" class="btn btn-info">List School</a>
+<a th:href="@{/school/list}" class="btn btn-info"> School by Page</a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
