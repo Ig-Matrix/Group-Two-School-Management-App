@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>School Mgt System</title>
+</head>
+<body>
+<h2>School Info</h2>
+
+<div>Name:<h4 th:text="${school.name}"></h4></div>
+<div>ID: <span th:text="${school.id}"></span></div>
+    <div>Address:  <h4 th:text="${school.address}"></h4></div>
+<div>Number of Staff:  <h4 th:text="${school.no_of_staff}"></h4></div>
+</body>
+</html>
