@@ -1,30 +1,61 @@
 <!DOCTYPE html>
-<html lang="en"   xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit School</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet" type="text/css" />
+    <script th:src="@{/js/index.js}" type="text/js"></script>
 </head>
-<body>
-<h1>Edit School</h1>
 
-<form th:action="@{/school/update/{id}(id=${school.id})}" method="post" th:object="${school}">
-    <label>Name</label><br>
-    <input type="text" name="name" th:value="${school.name}">
-    <br><br>
-
-    <label>Address</label><br>
-    <input type="text" name="address" th:value="${school.address}">
-    <br><br>
-
-    <label>Number of Staff</label><br>
-    <input type="text" name="no_of_staff" th:value="${school.no_of_staff}">
-    <br><br>
-
-
-    <input type="submit" value="Save">
-    <br><br>
-
-</form>
-
+<body class="min-h-screen flex flex-col">
+    <header th:replace="~{fragments/header.html :: header}"></header>
+    <main class="flex-1 py-10 bg-slate-50">
+        <div class="custom-container">
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Update <span
+                          th:text="${school.name}" class="capitalize">School</span></h2>
+                <p class="mt-2 text-lg leading-8 text-gray-600">Edit existing school information</p>
+            </div>
+            <form th:action="@{/school/update/{id}(id=${school.id})}" method="POST"
+                  class="mx-auto mt-16 max-w-xl sm:mt-20" th:object="${school}">
+                <div class="space-y-6">
+                    <div>
+                        <label for="name" class="form-label">School
+                            Name</label>
+                        <div class="mt-2.5">
+                            <input th:field="*{name}" th:value="${school.name}" type="text" name="name" id="name"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="address" class="form-label">Address</label>
+                        <div class="mt-2.5">
+                            <input th:field="*{address}" th:value="${school.address}" type="text" name="address"
+                                   id="address"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="no_of_staff" class="form-label">Number of
+                            Staffs</label>
+                        <div class="mt-2.5">
+                            <input th:field="*{no_of_staff}" th:value="${school.no_of_staff}" type="number"
+                                   name="no_of_staff" id="no_of_staff"
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-10">
+                    <button type="submit"
+                            class="submit-btn">Update
+                        School</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
+
+
 </html>

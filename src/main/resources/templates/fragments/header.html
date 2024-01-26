@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="bg-gray-800" th:fragment="header">
+        <div class="custom-container py-5 flex items-center justify-between text-white">
+            <a class="header-logo" th:href="@{/school}">
+                <img th:src="@{/images/logo.png}" width="50" height="50" alt="logo-image" />
+                <p class="logo-text">School Management</p>
+            </a>
+            <a th:href="@{/school/list}" class="dashboard-btn">Dashboard</a>
+        </div>
+    </header>
+</body>
+
+</html>

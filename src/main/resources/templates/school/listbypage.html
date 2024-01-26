@@ -1,66 +1,146 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Title</title>
+    <title>Dashboard</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet" type="text/css" />
+    <script th:src="@{/js/index.js}" type="text/js"></script>
 </head>
-<body>
-<div class="mx-auto" style="width: 70%">
-    <h2 class="m-2">Schools</h2>
-    <a th:href="@{/school/create}" class="btn btn-primary m-1">Create</a>
-    <div th:if="${hasContent}">
 
-        <form th:action="@{/school/deleteselected}" method="get">
+<body class="min-h-screen flex flex-col">
+    <header th:replace="~{fragments/header.html :: header}"></header>
+    <main class="flex-1 py-10 bg-slate-50">
+        <div class="custom-container">
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="dashboard-card">
+                    <h6 class="dashboard-title">Total Schools</h6>
+                    <p class="dashboard-stat">22000</p>
+                </div>
+                <div class="dashboard-card">
+                    <h6 class="dashboard-title">Total Staffs</h6>
+                    <p class="dashboard-stat">250</p>
+                </div>
+            </section>
+            <section class="mt-12 w-full">
+                <div class="space-y-2">
+                    <h5 class="font-medium text-lg text-gray-900">All Schools</h5>
+                    <p class="font-normal text-md">A list of registered schools available</p>
+                </div>
+            </section>
+            <section class="mt-10">
+                <div
+                     class="flex flex-wrap items-center justify-between bg-white py-3 px-2 border-b border-b-gray-400">
+                    <div class="w-full p-2 md:w-auto">
+                        <div class="school-search-container">
+                            <input type="text" id="search" class="school-search" placeholder="Search here" />
+                            <button class="search-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor"
+                                     class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="w-full p-2 md:w-auto">
+                        <a th:href="@{/school/create}"
+                           class="bg-primary text-white inline-flex items-center py-2 px-2.5 rounded-md">
+                            Add School
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full overflow-x-auto">
+                    <div class="min-w-[700px] w-full">
+                        <table class="school-table">
+                            <thead>
+                                <tr class="table-h">
+                                    <th class="w-2/6">
+                                        <div
+                                             class="w-full h-full flex items-center space-x-3">
+                                            <input type="checkbox" id="select-all"
+                                                   class="school-checkbox" />
+                                            <div class="flex flex-1 items-center relative h-full overflow-hidden">
+                                                <span>School Name</span>
+                                                <div id="delete-schools"
+                                                     class="absolute inset-0 flex items-center transition-all opacity-0 -translate-x-full z-50 bg-white">
+                                                    <button
+                                                            class="py-2 px-1 rounded-md text-white text-sm bg-primary shadow">Delete
+                                                        All</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="2/6">
+                                        Address
+                                    </th>
+                                    <th class="1/6">
+                                        Total Staffs
+                                    </th>
+                                    <th class="1/6">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="schools-body" th:if="${hasContent}">
+                                <tr class="table-r" th:each="school: ${schools}">
+                                    <td class="w-2/6">
+                                        <div class="w-full h-full inline-flex items-center space-x-3">
+                                            <input type="checkbox" name="selectedIds" th:value="${school.id}"
+                                                   id="select-all"
+                                                   class="school-checkbox" />
+                                            <span class="school-name" th:text="${school.name}">School Name</span>
+                                        </div>
+                                    </td>
+                                    <td th:text="${school.address}" class="w-2/6">
+                                        Lagos School
+                                    </td>
+                                    <td th:text="${school.no_of_staff}" class="w-1/6">
+                                        0
+                                    </td>
+                                    <td class="school-table-action w-1/6">
+                                        <a th:href="@{/school/view/{id}(id=${school.id})}">View</a>
+                                        <a th:href="@{/school/edit/{id}(id=${school.id})}">Edit</a>
+                                        <a th:href="@{/school/delete/{id}(id=${school.id})}">Delete</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody th:unless="${hasContent}">
+                                <tr>
+                                    <td colspan="4" class="text-center h-24">
+                                        No School Available
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="table-pagination" th:if="${page_total > 1}">
+                    <div class="table-pagination-count">
+                        <span>Showing</span>
+                        <span th:text="${page_num + 1}">1</span>
+                        <span>to</span>
+                        <span>10</span>
+                        <span>of</span>
+                        <span th:text="${page_total}">20</span>
+                    </div>
+                    <div class="table-pagination-btngroup">
+                        <a class="table-pagination-btn" th:href="@{/school/list(page=${page_num-1})}"
+                           th:data-disabled="${!page_hasPrevious}">
+                            Previous
+                        </a>
+                        <a class="table-pagination-btn" th:href="@{/school/list(page=${page_num + 1})}"
+                           th:data-disabled="${!page_hasNext}">
+                            Next
+                        </a>
+                    </div>
+                </div>
+            </section>
 
-            <table class="table table-striped ">
-                <thead class="table-dark p-2">
-                <tr>
-                    <th>Select</th>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>no_of_staff</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="school:${schools} " class="p-2">
-                    <td>
-                        <input type="checkbox" name="selectedIds" th:value="${school.id}"/>
-                    </td>
-                    <td th:text="${school.id}"></td>
-                    <td th:text="${school.name}"></td>
-                    <td th:text="${school.address}"></td>
-                    <td th:text="${school.no_of_staff}"></td>
-                    <td><a th:href="@{/school/view(id=${school.id})}" class="btn btn-primary m-0.5">View</a>
-                        <a th:href="@{/school/edit/{id}(id=${school.id})} " class="btn btn-primary m-0.5">Edit</a>
-                        <a th:href="@{/school/delete/{id}(id=${school.id})}" class="btn btn-danger m-0.5">Delete</a>
-                    </td>
-                </tbody>
-                </tr>
-            </table>
-            <button type="submit" class="btn btn-danger m-1" value="save">Delete Selected</button>
-
-        </form>
-
-        <div th:if="${page_total > 1}">
-            <div>
-                <span>Page <span th:text="${page_num+1}"></span> of <span th:text="${page_total}"></span></span>
-            </div>
-            <div>
-                <a th:if="${page_num > 0}" th:href="@{/school/list(page=${page_num-1})}">Previous</a>
-                <a th:if="${page_num < (page_total - 1)}" th:href="@{/school/list(page=${page_num + 1})}">Next</a>
-            </div>
         </div>
-    </div>
-    <div th:if="${page_total < 1}">
-        <p>NO SCHOOL AVAILABLE</p>
-    </div>
-
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
-
-</script>
+    </main>
+    <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
+
 </html>

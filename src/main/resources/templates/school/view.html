@@ -1,15 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>School Mgt System</title>
+    <title th:text="${school.name}">View School</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet" type="text/css" />
+    <script th:src="@{/js/index.js}" type="text/js"></script>
 </head>
-<body>
-<h2>School Info</h2>
 
-<div>Name:<h4 th:text="${school.name}"></h4></div>
-<div>ID: <span th:text="${school.id}"></span></div>
-<div>Address:  <h4 th:text="${school.address}"></h4></div>
-<div>Number of Staff:  <h4 th:text="${school.no_of_staff}"></h4></div>
+<body class="min-h-screen flex flex-col">
+    <header th:replace="~{fragments/header.html :: header}"></header>
+    <main class="flex-1 bg-slate-50">
+        <section class="border-b border-b-gray-200 py-4">
+            <div class="custom-container flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="inline-flex items-center justify-center border border-gray-100 rounded-full">
+                        <img th:src="@{/images/tuple.svg}" alt="Tuple" class="w-20 h-20 rounded-full" />
+                    </div>
+                    <div class="max-w-36 truncate overflow-hidden space-y-2 md:max-w-52">
+                        <p class="text-sm" th:text="${'#'+school.id}">#1</p>
+                        <h2 class="text-base md:text-xl font-medium" th:text="${school.name}">Ikeja Girls</h2>
+                    </div>
+                </div>
+                <a class="edit-btn" th:href="@{/school/edit/{id}(id=${school.id})}">Edit</a>
+            </div>
+        </section>
+        <section class="mt-12">
+            <div class="custom-container px-3">
+                <div class="school-list">
+                    <div class="school-list-item">
+                        <h6>School Name</h6>
+                        <p class="capitalize" th:text="${school.name}">Ikeja High School</p>
+                    </div>
+                    <div class="school-list-item">
+                        <h6>Address</h6>
+                        <p th:text="${school.address}">No 29, Maria road, Maryland Ikeja, Lagos</p>
+                    </div>
+                    <div class="school-list-item">
+                        <h6>No of Staffs</h6>
+                        <p th:text="${school.no_of_staff}">200</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
+
 </html>
