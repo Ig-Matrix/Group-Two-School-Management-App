@@ -15,6 +15,11 @@ public class SchoolServiceImpl implements SchoolService {
     private SchoolRepository sRepo;
 
 
+    @Override
+    public List<School> getAllSchools() {
+        return sRepo.findAll();
+    }
+
 
 
     @Override
@@ -60,6 +65,12 @@ public class SchoolServiceImpl implements SchoolService {
 
         System.out.println("Example "+example.getMatcher());
         return sRepo.findAll(example,pageable);
+
+    }
+
+    @Override
+    public Page<School> getSchoolsByName(String term, int pageNumber, int pageSize) {
+             return sRepo.findByNameContaining( term, PageRequest.of(pageNumber, pageSize));
 
     }
 

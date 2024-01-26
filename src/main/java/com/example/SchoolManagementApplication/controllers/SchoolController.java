@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/school")
@@ -54,55 +55,44 @@ public class SchoolController {
      */
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView listByPage(@RequestParam(name = "page", defaultValue = "0") int page) {
+    public ModelAndView listByPage(@RequestParam(name = "page", defaultValue = "0") int page,@RequestParam(name = "term", required = false) String searchTerm){
 
         ModelAndView mv = new ModelAndView();
 
         int pageSize = 4;
+        Page<School> byPage;
+        List<School> schools=schoolService.getAllSchools();
 
-        Page<School> byPage = schoolService.getAllSchool(page, pageSize);
+        if(searchTerm==null){
+
+            byPage   = schoolService.getAllSchool(page,pageSize);
+        }else{
+
+            byPage   = schoolService.getSchoolsByName(searchTerm,page,pageSize);
+        }
+
         mv.setViewName("school/listbypage");
 
         mv.addObject("hasContent", byPage.hasContent());
 
-        if (byPage.hasContent()) {
+        int totalStaffs = schools.stream().collect(Collectors.summingInt(School::getNo_of_staff));
+
+
+            mv.addObject("total_staffs",totalStaffs);
+            mv.addObject("total_schools",schools.size());
             mv.addObject("schools", byPage.getContent());
             mv.addObject("page_num", byPage.getNumber());
             mv.addObject("page_total", byPage.getTotalPages());
             mv.addObject("page_hasNext", byPage.hasNext());
             mv.addObject("page_hasPrev", byPage.hasPrevious());
 
-        }
+
         return mv;
     }
 
-    @RequestMapping(value = "/searchbyname", method = RequestMethod.GET)
-    public ModelAndView searchStaffByName(@RequestParam(name = "term", defaultValue = "") String searchTerm,
-            @RequestParam(name = "page", defaultValue = "0") int page) {
-        ModelAndView mv = new ModelAndView();
 
-        int pageSize = 2;
-        School sch = new School();
-        sch.setName(searchTerm);
 
-        Page<School> byPage = schoolService.getSchoolsByName(sch, page, pageSize);
 
-        mv.setViewName("school/search");
-
-        mv.addObject("hasContent", byPage.hasContent());
-        mv.addObject("term", searchTerm);
-
-        if (byPage.hasContent()) {
-
-            mv.addObject("schools", byPage.getContent());
-            mv.addObject("page_num", byPage.getNumber());
-            mv.addObject("page_total", byPage.getTotalPages());
-            mv.addObject("page_hasNext", byPage.hasNext());
-            mv.addObject("page_hasPrev", byPage.hasPrevious());
-
-        }
-        return mv;
-    }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@Valid School school, Errors errors) {

@@ -21,4 +21,8 @@ public interface SchoolService {
 
     public Page<School> getSchoolsByName(School name, int pageNumber, int pageSize);
 
+    public Page<School> getSchoolsByName(String term, int pageNumber, int pageSize);
+
+    public List<School> getAllSchools();
+
 }
