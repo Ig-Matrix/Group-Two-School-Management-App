@@ -2,11 +2,19 @@ package com.example.SchoolManagementApplication.controllers;
 
 import com.example.SchoolManagementApplication.entity.School;
 import com.example.SchoolManagementApplication.services.SchoolService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.util.List;
 
@@ -30,6 +38,7 @@ public class SchoolController {
     public ModelAndView create() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("school/create");
+        mv.addObject("school", new School());
         return mv;
     }
 
@@ -96,10 +105,12 @@ public class SchoolController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@RequestParam(value = "name") String name,
-            @RequestParam(value = "address") String address,
-            @RequestParam(value = "no_of_staff") int no_of_staff) {
-        schoolService.create(name, address, no_of_staff);
+    public String register(@Valid School school, Errors errors) {
+        if (errors.hasErrors()) {
+            return "school/create";
+        }
+
+        schoolService.create(school.getName(), school.getAddress(), school.getNo_of_staff());
         return "redirect:/school/list";
     }
 
@@ -117,17 +128,19 @@ public class SchoolController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable(value = "id") long id) {
-
-        School school = schoolService.getSchool(id);
         ModelAndView mv = new ModelAndView();
-        mv.addObject("school", school);
         mv.setViewName("school/edit");
+        School school = schoolService.getSchool(id);
+        mv.addObject("school", school);
         return mv;
-
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String update(School school, @PathVariable(value = "id") long id) {
+    public String update(@Valid School school, Errors errors, @PathVariable(value = "id") long id) {
+        if (errors.hasErrors()) {
+            return "school/edit";
+        }
+
         school.setId(id);
         schoolService.updateSchool(school);
         return "redirect:/school/list";

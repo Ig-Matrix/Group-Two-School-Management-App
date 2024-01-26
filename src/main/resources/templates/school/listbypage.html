@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <link th:href="@{/css/index.css}" rel="stylesheet" type="text/css" />
-    <script th:src="@{/js/index.js}" type="text/js"></script>
+    <script th:src="@{/js/index.js}" type="text/javascript"></script>
 </head>
 
 <body class="min-h-screen flex flex-col">
@@ -25,7 +25,7 @@
             <section class="mt-12 w-full">
                 <div class="space-y-2">
                     <h5 class="font-medium text-lg text-gray-900">All Schools</h5>
-                    <p class="font-normal text-md">A list of registered schools available</p>
+                    <p class="font-normal text-md">A list of all registered schools available</p>
                 </div>
             </section>
             <section class="mt-10">
@@ -127,7 +127,7 @@
                     </div>
                     <div class="table-pagination-btngroup">
                         <a class="table-pagination-btn" th:href="@{/school/list(page=${page_num-1})}"
-                           th:data-disabled="${!page_hasPrevious}">
+                           th:data-disabled="${!page_hasPrev}">
                             Previous
                         </a>
                         <a class="table-pagination-btn" th:href="@{/school/list(page=${page_num + 1})}"

@@ -1,9 +1,14 @@
 package com.example.SchoolManagementApplication.entity;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class School {
@@ -12,9 +17,16 @@ public class School {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
+    @Size(min = 3, message = "School name must be at least three characters")
     private String name;
+
+    @NotNull
+    @Size(min = 5, message = "Address must be at least five characters")
     private String address;
 
+    @NotNull
+    @Min(value = 1, message = "A school must have at least one staff")
     private int no_of_staff;
 
     public School() {
@@ -67,5 +79,25 @@ public class School {
 
     public void setNo_of_staff(int no_of_staff) {
         this.no_of_staff = no_of_staff;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof School)) {
+            return false;
+        }
+
+        School school = (School) o;
+        return Objects.equals(this.id, school.id) && Objects.equals(this.name, school.name)
+                && Objects.equals(this.address, school.address) && Objects.equals(this.no_of_staff, school.no_of_staff);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this.name, this.address, this.no_of_staff);
     }
 }

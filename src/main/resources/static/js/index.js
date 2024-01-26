@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const deleteSchoolElem = document.querySelector("#delete-schools");
   const currentYearElem = document.querySelector("#current-year");
 
-  console.log("Running Javascript");
-
   if (currentYearElem) {
     currentYearElem.textContent = new Date().getFullYear();
   }
@@ -16,7 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
       (elem) => elem.checked
     );
 
-    const urlSearchParam = new URLSearchParams();
+    const urlSearchParam = new URLSearchParams(window.location.search);
+    urlSearchParam.delete("selectedIds");
+
     selectedCheckedElem.forEach((elem) => {
       const name = elem.getAttribute("name");
       const value = elem.getAttribute("value");

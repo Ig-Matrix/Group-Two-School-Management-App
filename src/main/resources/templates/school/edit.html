@@ -27,6 +27,8 @@
                             <input th:field="*{name}" th:value="${school.name}" type="text" name="name" id="name"
                                    class="form-control">
                         </div>
+                        <span class="validation-error" th:if="${#fields.hasErrors('name')}"
+                              th:errors="*{name}">Name error</span>
                     </div>
                     <div>
                         <label for="address" class="form-label">Address</label>
@@ -35,6 +37,8 @@
                                    id="address"
                                    class="form-control">
                         </div>
+                        <span class="validation-error" th:if="${#fields.hasErrors('address')}"
+                              th:errors="*{address}">Address error</span>
                     </div>
                     <div>
                         <label for="no_of_staff" class="form-label">Number of
@@ -44,6 +48,8 @@
                                    name="no_of_staff" id="no_of_staff"
                                    class="form-control">
                         </div>
+                        <span class="validation-error" th:if="${#fields.hasErrors('no_of_staff')}"
+                              th:errors="*{no_of_staff}">Ingredients error</span>
                     </div>
                 </div>
                 <div class="mt-10">

@@ -2,11 +2,8 @@ package com.example.SchoolManagementApplication.services;
 
 import java.util.List;
 
-
 import com.example.SchoolManagementApplication.entity.School;
 import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public interface SchoolService {
 
@@ -20,10 +17,8 @@ public interface SchoolService {
 
     public void deleteBulkSchools(List<Long> ids);
 
-
     public Page<School> getAllSchool(int pageNumber, int pageSize);
 
     public Page<School> getSchoolsByName(School name, int pageNumber, int pageSize);
-
 
 }

@@ -16,30 +16,37 @@
                 <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Create New School</h2>
                 <p class="mt-2 text-lg leading-8 text-gray-600">Add a new school to your list of records</p>
             </div>
-            <form th:action="@{register}" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20">
+            <form th:action="@{/school/register}" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20"
+                  th:object="${school}">
                 <div class="space-y-6">
                     <div>
                         <label for="name" class="form-label">School
                             Name</label>
                         <div class="mt-2.5">
-                            <input type="text" name="name" id="name"
+                            <input th:field="*{name}" type="text" name="name" id="name"
                                    class="form-control">
                         </div>
+                        <span class="validation-error" th:if="${#fields.hasErrors('name')}"
+                              th:errors="*{name}">Name error</span>
                     </div>
                     <div>
                         <label for="address" class="form-label">Address</label>
                         <div class="mt-2.5">
-                            <input type="text" name="address" id="address"
+                            <input th:field="*{address}" type="text" name="address" id="address"
                                    class="form-control">
                         </div>
+                        <span class="validation-error" th:if="${#fields.hasErrors('address')}"
+                              th:errors="*{address}">Address error</span>
                     </div>
                     <div>
                         <label for="no_of_staff" class="form-label">Number of
                             Staffs</label>
                         <div class="mt-2.5">
-                            <input type="number" name="no_of_staff" id="no_of_staff"
+                            <input th:field="*{no_of_staff}" type="number" name="no_of_staff" id="no_of_staff"
                                    class="form-control">
                         </div>
+                        <span class="validation-error" th:if="${#fields.hasErrors('no_of_staff')}"
+                              th:errors="*{no_of_staff}">Ingredients error</span>
                     </div>
                 </div>
                 <div class="mt-10">
