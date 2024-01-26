@@ -18,9 +18,14 @@ public interface SchoolService {
     public void deleteBulkSchools(List<Long> ids);
 
 
-    public Page<School> getAllSchool(int pageNumber , int pageSize);
+    public Page<School> getSchoolsByPage(int pageNumber , int pageSize);
 
-    public Page<School> getSchoolsByName(School name, int pageNumber , int pageSize);
+    public List<School> getSchoolsByName(School school);
+
+
+    public List<School> getAllSchools();
+
+
 
 
 }

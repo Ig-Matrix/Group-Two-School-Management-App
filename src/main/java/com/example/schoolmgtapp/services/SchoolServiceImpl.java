@@ -9,14 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SchoolServiceImpl implements SchoolService {
     @Autowired
     private SchoolRepository sRepo;
-
-
-
 
     @Override
     public void create(String name, String address,  int no_of_staff) {
@@ -45,23 +43,23 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public Page<School> getAllSchool(int pageNumber, int pageSize) {
-      Pageable pageable=  (Pageable) PageRequest.of(pageNumber, pageSize);
-       return sRepo.findAll(pageable);
+    public Page<School> getSchoolsByPage(int pageNumber, int pageSize) {
+        Pageable pageable=  (Pageable) PageRequest.of(pageNumber, pageSize);
+        return sRepo.findAll(pageable);
+    }
+
+
+    @Override
+    public List<School> getSchoolsByName(School school) {
+
+
+        return sRepo.searchByName(school.getName());
+
     }
 
     @Override
-    public Page<School> getSchoolsByName(School school, int pageNumber, int pageSize) {
-        ExampleMatcher matcher = ExampleMatcher.matchingAll()
-                .withIgnoreCase()
-                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<School> example= Example.of(school,matcher);
-        System.out.println("Example "+example);
-        Pageable pageable=  (Pageable) PageRequest.of(pageNumber, pageSize);
-
-        System.out.println("Example "+example.getMatcher());
-        return sRepo.findAll(example,pageable);
-
+    public List<School> getAllSchools() {
+        return sRepo.findAll();
     }
 
 
