@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+#Tailwind related files
+package-lock.json
+package.json
+tailwind.config.js
+src/**/tailwind.css
+node_modules

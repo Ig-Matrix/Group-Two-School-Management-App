@@ -1,6 +1,5 @@
 package com.example.SchoolManagementApplication.controllers;
 
-
 import com.example.SchoolManagementApplication.entity.School;
 import com.example.SchoolManagementApplication.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +33,16 @@ public class SchoolController {
         return mv;
     }
 
-/*
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list(){
-       List<School> schools = schoolService.getAllSchool();
-        ModelAndView mv= new ModelAndView();
-        mv.setViewName("school/list");
-        mv.addObject("schools", schools);
-        return mv;
-    }
-*/
+    /*
+     * @RequestMapping(value = "/list", method = RequestMethod.GET)
+     * public ModelAndView list(){
+     * List<School> schools = schoolService.getAllSchool();
+     * ModelAndView mv= new ModelAndView();
+     * mv.setViewName("school/list");
+     * mv.addObject("schools", schools);
+     * return mv;
+     * }
+     */
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView listByPage(@RequestParam(name = "page", defaultValue = "0") int page) {
@@ -53,7 +52,7 @@ public class SchoolController {
         int pageSize = 4;
 
         Page<School> byPage = schoolService.getAllSchool(page, pageSize);
-        mv.setViewName("school/listByPage");
+        mv.setViewName("school/listbypage");
 
         mv.addObject("hasContent", byPage.hasContent());
 
@@ -69,7 +68,8 @@ public class SchoolController {
     }
 
     @RequestMapping(value = "/searchbyname", method = RequestMethod.GET)
-    public ModelAndView searchStaffByName(@RequestParam(name = "term", defaultValue = "") String searchTerm, @RequestParam(name = "page", defaultValue = "0") int page) {
+    public ModelAndView searchStaffByName(@RequestParam(name = "term", defaultValue = "") String searchTerm,
+            @RequestParam(name = "page", defaultValue = "0") int page) {
         ModelAndView mv = new ModelAndView();
 
         int pageSize = 2;
@@ -95,17 +95,16 @@ public class SchoolController {
         return mv;
     }
 
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@RequestParam(value = "name") String name,
-                           @RequestParam(value = "address") String address,
-                           @RequestParam(value = "no_of_staff") int no_of_staff) {
+            @RequestParam(value = "address") String address,
+            @RequestParam(value = "no_of_staff") int no_of_staff) {
         schoolService.create(name, address, no_of_staff);
         return "redirect:/school/list";
     }
 
-    @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public ModelAndView view(@RequestParam(value = "id") long id) {
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public ModelAndView view(@PathVariable(value = "id") long id) {
 
         School school = schoolService.getSchool(id);
         ModelAndView mv = new ModelAndView();
@@ -115,7 +114,6 @@ public class SchoolController {
         return mv;
 
     }
-
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable(value = "id") long id) {
@@ -135,7 +133,6 @@ public class SchoolController {
         return "redirect:/school/list";
     }
 
-
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable(value = "id") long id) {
         schoolService.deleteSchool(id);
@@ -149,6 +146,4 @@ public class SchoolController {
         return "redirect:/school/list";
     }
 
-
 }
-
